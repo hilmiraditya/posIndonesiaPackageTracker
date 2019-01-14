@@ -5,13 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/putih"
-    tools:context=".MainActivity">
-
+    tools:context=".DetailResiActivity">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="0dp"
-        android:layout_height="125dp"
+        android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:src="@drawable/posindonesia"
         android:transitionName="AppLogo"
@@ -43,7 +42,6 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/resiCard"
-            android:transitionName="CardBody"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
@@ -53,6 +51,7 @@
             android:layout_marginBottom="8dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="8dp"
+            android:transitionName="CardBody"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +63,7 @@
         <Button
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_gravity="end"
             android:transitionName="ButtonS"
             android:layout_marginRight="18dp"
@@ -72,5 +71,4 @@
             android:text="Search"
             android:textColor="@color/putih" />
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>
