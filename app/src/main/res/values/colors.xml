@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#e66e12</color>
+    <color name="colorPrimaryDark">#e66e12</color>
+    <color name="colorAccent">#d32f2f</color>
+    <color name="posindonesia">#e66e12</color>
+    <color name="merahJNE">#d32f2f</color>
+    <color name="efekmerah">#ff0007</color>
+    <color name="biruJNE">#ff5722</color>
+    <color name="putih">#FFFFFF</color>
+
+    <color name="success">#009624</color>
+    <color name="failed">#c62828</color>
 </resources>
