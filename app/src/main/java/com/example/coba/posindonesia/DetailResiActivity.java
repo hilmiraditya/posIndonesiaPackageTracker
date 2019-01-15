@@ -18,6 +18,7 @@ public class DetailResiActivity extends AppCompatActivity {
         TextView noDetailResi = this.findViewById(R.id.noDetailResi);
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
+
     }
 
     @Override

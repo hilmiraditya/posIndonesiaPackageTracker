@@ -21,13 +21,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        bindingTransition();
+    }
 
+
+    private void bindingTransition(){
         final View vAppLogo = this.findViewById(R.id.imageView);
         final View vAppTitle = this.findViewById(R.id.textView);
         final View vCardBody = this.findViewById(R.id.resiCard);
         final View vButtonS = this.findViewById(R.id.searchBtn);
         final View vmapView = this.findViewById(R.id.mapCard);
-
         final EditText noresi = this.findViewById(R.id.noResi);
 
 
