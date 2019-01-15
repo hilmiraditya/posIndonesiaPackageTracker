@@ -16,16 +16,33 @@ public class MainActivity extends AppCompatActivity {
 
     DetailResiActivity da;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bindingTransition();
+        Fade fade = new Fade();
+        View decor = getWindow().getDecorView();
+        fade.excludeTarget(decor.findViewById(R.id.action_bar_container),true);
+        fade.excludeTarget(android.R.id.statusBarBackground,true);
+        fade.excludeTarget(android.R.id.navigationBarBackground,true);
+
+        getWindow().setEnterTransition(fade);
+        getWindow().setExitTransition(fade);
+
+        getWindow().setAllowReturnTransitionOverlap(false);
+
+
+        detailResiTransition();
     }
 
 
-    private void bindingTransition(){
+    private void detailResiTransition(){
+
+
+
         final View vAppLogo = this.findViewById(R.id.imageView);
         final View vAppTitle = this.findViewById(R.id.textView);
         final View vCardBody = this.findViewById(R.id.resiCard);
@@ -52,12 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goToDetailResi, activityOptions.toBundle());
             }
         });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        overridePendingTransition(0, 0);
     }
 
 }
