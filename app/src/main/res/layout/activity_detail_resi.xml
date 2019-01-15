@@ -124,13 +124,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:transitionName="ButtonS"
-            android:drawableStart="@drawable/ic_search_black_24dp"
-            android:drawableTint="@color/putih"
+            android:drawableStart="@drawable/ic_description_black_24dp"
+            android:drawableTint="@color/colorPrimary"
             android:drawablePadding="4dp"
             android:layout_marginRight="18dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="Search"
-            android:textColor="@color/putih" />
+            android:backgroundTint="@color/putih"
+            android:text="Detail Info"
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 
