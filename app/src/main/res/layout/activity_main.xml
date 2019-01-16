@@ -85,15 +85,15 @@
 
         <Button
             android:id="@+id/searchBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
             android:transitionName="ButtonS"
             android:drawableStart="@drawable/ic_search_black_24dp"
             android:drawableTint="@color/putih"
             android:drawablePadding="4dp"
             android:layout_marginRight="18dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:background="@drawable/button_layout"
             android:text="Search"
             android:textColor="@color/putih" />
 
