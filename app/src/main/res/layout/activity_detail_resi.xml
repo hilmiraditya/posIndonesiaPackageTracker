@@ -84,7 +84,6 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/resiCard"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_gravity="center"
@@ -101,46 +100,24 @@
             app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
-            <LinearLayout
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/refresh_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:backgroundTint="@color/colorPrimary"
+                android:clickable="true"
+                android:paddingRight="100dp"
+                android:paddingBottom="200dp"
+                android:tint="@color/putih"
+                app:srcCompat="@drawable/ic_refresh_black_24dp" />
+
+            <ViewStub
+                android:id="@+id/MAP_ETA"
+                android:inflatedId="@+id/map_eta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:text="ETA 13:15"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <fragment
-                        android:id="@+id/mapfragment"
-                        class="com.here.android.mpa.mapping.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/refresh_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:clickable="true"
-                        android:paddingRight="100dp"
-                        android:paddingBottom="200dp"
-                        android:tint="@color/putih"
-                        app:srcCompat="@drawable/ic_refresh_black_24dp" />
-
-                </FrameLayout>
-            </LinearLayout>
+                android:layout_weight="0.75" />
 
         </android.support.v7.widget.CardView>
 
