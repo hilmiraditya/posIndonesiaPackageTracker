@@ -161,9 +161,7 @@ public class DetailResiActivity extends AppCompatActivity{
                 Log.i("succ", response.message());
 
                 TextView etaResi = findViewById(R.id.etaPackage);
-                double d= Double.parseDouble(response.body().getMessage().getEstimation_time());
-
-
+                
                 View dsV = new DetailBottomSheet().getView();
                 SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
                 String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
