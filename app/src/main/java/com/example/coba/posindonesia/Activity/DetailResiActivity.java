@@ -58,7 +58,11 @@ public class DetailResiActivity extends AppCompatActivity{
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
 
+        // masukin sini mi lon lat nya
+        // masukin sini mi lon lat nya
         getDetailResi(getIntent().getStringExtra("NoResi"),"107.573117","-6.9032739");
+        // masukin sini mi lon lat nya
+        // masukin sini mi lon lat nya
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -161,7 +165,7 @@ public class DetailResiActivity extends AppCompatActivity{
                 Log.i("succ", response.message());
 
                 TextView etaResi = findViewById(R.id.etaPackage);
-                
+
                 View dsV = new DetailBottomSheet().getView();
                 SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
                 String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
