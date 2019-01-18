@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/putih"
-    tools:context=".Activity.DetailResiActivity">
+    tools:context=".DetailResiActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -118,42 +118,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.75" />
-
-                <TextView
-                    android:id="@+id/etaPackage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:text="-"
-                    android:textAlignment="center"
-                    android:textColor="#ffff"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <fragment
-                        android:id="@+id/mapfragment"
-                        class="com.here.android.mpa.mapping.MapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <android.support.design.widget.FloatingActionButton
-                        android:id="@+id/refresh_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:clickable="true"
-                        android:paddingRight="100dp"
-                        android:paddingBottom="200dp"
-                        android:tint="@color/putih"
-                        app:srcCompat="@drawable/ic_refresh_black_24dp" />
-
-                </FrameLayout>
-            </LinearLayout>
 
         </android.support.v7.widget.CardView>
 
