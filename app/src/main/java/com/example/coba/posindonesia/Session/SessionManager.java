@@ -17,6 +17,8 @@ public class SessionManager {
     private String yours;
     private String summary;
     private String resi;
+    private String latitude;
+    private String longitude;
 
     int PRIVATE_MODE = 0;
 
@@ -28,6 +30,29 @@ public class SessionManager {
         pref = _context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
     }
+
+
+    public String getLatitude() {
+        return pref.getString("latitude", "-");
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+        editor.putString("latitude", latitude);
+        editor.commit();
+
+    }
+
+    public String getLongitude() {
+        return pref.getString("longitude", "-");
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+        editor.putString("longitude", longitude);
+        editor.commit();
+    }
+
 
 
     public void setResi(String resi){

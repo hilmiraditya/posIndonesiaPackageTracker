@@ -58,7 +58,7 @@ public class DetailResiActivity extends AppCompatActivity{
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
 
-        getDetailResi(getIntent().getStringExtra("NoResi"),"112.1280883","-7.1219707");
+        getDetailResi(getIntent().getStringExtra("NoResi"),"107.573117","-6.9032739");
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -161,15 +161,21 @@ public class DetailResiActivity extends AppCompatActivity{
                 Log.i("succ", response.message());
 
                 TextView etaResi = findViewById(R.id.etaPackage);
-                etaResi.setText(response.body().getMessage().getEstimation_time());
+                double d= Double.parseDouble(response.body().getMessage().getEstimation_time());
+
 
                 View dsV = new DetailBottomSheet().getView();
                 SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
                 String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
+                String eta = response.body().getMessage().getEstimation_time();
+                int maxLength = (eta.length() < 3)?eta.length():3;
+                String cutString = eta.substring(0, maxLength) + " Minutes";
+                etaResi.setText(cutString);
                 sessionManager.setSummary(summ);
                 sessionManager.setYours(response.body().getMessage().getYour_packet());
                 sessionManager.setResi(noResi);
-
+                sessionManager.setLatitude(response.body().getMessage().getLatitude());
+                sessionManager.setLongitude(response.body().getMessage().getLongitude());
             }
 
             @Override
