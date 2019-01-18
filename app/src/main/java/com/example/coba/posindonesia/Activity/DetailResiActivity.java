@@ -1,36 +1,34 @@
-package com.example.coba.posindonesia;
+package com.example.coba.posindonesia.Activity;
 
 import android.support.design.widget.BottomSheetDialogFragment;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.transition.Fade;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.directions.route.Routing;
-import com.google.android.gms.maps.GoogleMap;
+import com.example.coba.posindonesia.Fragment.DetailBottomSheet;
+import com.example.coba.posindonesia.Interfaces.RequestAPI;
+import com.example.coba.posindonesia.Model.Resi;
+import com.example.coba.posindonesia.R;
+import com.example.coba.posindonesia.Session.SessionManager;
+import com.example.coba.posindonesia.Url.BaseUrl;
 import com.here.android.mpa.mapping.MapFragment;
 import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.mapping.Map;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.here.android.mpa.common.GeoCoordinate;
 import com.here.android.mpa.common.OnEngineInitListener;
-import com.here.android.mpa.mapping.Map;
 import com.here.android.mpa.mapping.MapObject;
-import com.here.android.mpa.mapping.OnMapRenderListener;
-import com.here.android.mpa.routing.RouteManager;
 
-import java.util.ArrayList;
-import java.util.zip.Inflater;
+import org.w3c.dom.Text;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailResiActivity extends AppCompatActivity{
 
@@ -48,12 +46,10 @@ public class DetailResiActivity extends AppCompatActivity{
     private Map map = null;
     private MapFragment mapFragment = null;
     private MapObject mapObject;
+    BaseUrl baseUrl = new BaseUrl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_resi);
@@ -61,6 +57,8 @@ public class DetailResiActivity extends AppCompatActivity{
         TextView noDetailResi = this.findViewById(R.id.noDetailResi);
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
+
+        getDetailResi(getIntent().getStringExtra("NoResi"),"112.1280883","-7.1219707");
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -135,7 +133,7 @@ public class DetailResiActivity extends AppCompatActivity{
 //        adapter = new RecyclerViewAdapter(dataSet);
 //        recyclerView.setAdapter(adapter);
 //        ////
-    }
+
 
 //    private void setDataSet(){
 //        dataSet.add("HALO SATU DUA TIGA");
@@ -150,3 +148,36 @@ public class DetailResiActivity extends AppCompatActivity{
 //    }
 
 
+//GET URUTAN PAKET
+
+    protected void getDetailResi(final String noResi, String lon, String lat){
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl.getUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+        RequestAPI requestAPI = retrofit.create(RequestAPI.class);
+
+        Call<Resi> resiCall = requestAPI.getResi(noResi, lon, lat);
+        resiCall.enqueue(new Callback<Resi>() {
+            @Override
+            public void onResponse(Call<Resi> call, Response<Resi> response) {
+                Log.i("succ", response.message());
+
+                TextView etaResi = findViewById(R.id.etaPackage);
+                etaResi.setText(response.body().getMessage().getEstimation_time());
+
+                View dsV = new DetailBottomSheet().getView();
+                SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
+                String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
+                sessionManager.setSummary(summ);
+                sessionManager.setYours(response.body().getMessage().getYour_packet());
+                sessionManager.setResi(noResi);
+
+            }
+
+            @Override
+            public void onFailure(Call<Resi> call, Throwable t) {
+                Log.i("errr", t.getMessage());
+            }
+        });
+
+    }
+
+}

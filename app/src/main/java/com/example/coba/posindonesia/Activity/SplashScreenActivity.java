@@ -1,4 +1,4 @@
-package com.example.coba.posindonesia;
+package com.example.coba.posindonesia.Activity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.transition.Fade;
 import android.util.Pair;
 import android.view.View;
+
+import com.example.coba.posindonesia.R;
 
 public class SplashScreenActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.coba.posindonesia;
+package com.example.coba.posindonesia.Fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -8,9 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.coba.posindonesia.R;
+import com.example.coba.posindonesia.Adapter.RecyclerViewAdapter;
+import com.example.coba.posindonesia.Session.SessionManager;
+
+import org.w3c.dom.Text;
 
 public class DetailBottomSheet extends BottomSheetDialogFragment {
 
@@ -28,6 +32,17 @@ public class DetailBottomSheet extends BottomSheetDialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recyclerViewAdapter);
+
+        SessionManager sessionManager = new SessionManager(getContext());
+
+        TextView resiText = view.findViewById(R.id.resiPackage);
+        resiText.setText(sessionManager.getResi());
+
+        TextView yourText = view.findViewById(R.id.yoursPackage);
+        yourText.setText(sessionManager.getYours());
+
+        TextView sumText = view.findViewById(R.id.summaryPackage);
+        sumText.setText(sessionManager.getSummary());
 
         return view;
     }
