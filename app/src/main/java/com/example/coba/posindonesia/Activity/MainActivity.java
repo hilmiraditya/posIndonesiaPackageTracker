@@ -16,18 +16,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.coba.posindonesia.Maps.MapsF;
 import com.example.coba.posindonesia.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.here.android.mpa.mapping.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
-
-    DetailResiActivity da;
     View v;
     private static final int REQUEST_CODE_PERMISSION = 1;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     Double latitude, longitude;
+    MapsF mapsF = new MapsF();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,12 +43,30 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
 
+
         getWindow().setAllowReturnTransitionOverlap(false);
 
 
         detailResiTransition();
+
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("onPASU", "oused");
+        if (mapsF.getMapFragment() != null) mapsF.getMapFragment().onDestroy();
+
+    }
+
+    @Override
+    protected void onResume() {
+        Log.i("onRESMU", "RESUME");
+        if (mapsF.getMapFragment() != null) mapsF.getMapFragment().onDestroyView();
+
+        super.onResume();
+    }
 
     private void detailResiTransition(){
 

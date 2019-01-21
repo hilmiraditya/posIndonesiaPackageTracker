@@ -6,10 +6,14 @@ import android.location.Location;
 import android.os.Build;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentController;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -17,6 +21,7 @@ import android.widget.TextView;
 
 import com.example.coba.posindonesia.Fragment.DetailBottomSheet;
 import com.example.coba.posindonesia.Interfaces.RequestAPI;
+import com.example.coba.posindonesia.Maps.MapsF;
 import com.example.coba.posindonesia.Model.Resi;
 import com.example.coba.posindonesia.R;
 import com.example.coba.posindonesia.Session.SessionManager;
@@ -52,9 +57,10 @@ public class DetailResiActivity extends AppCompatActivity{
 //        map.setCenter(new GeoCoordinate(37.7397, -121.4252, 0.0), Map.Animation.NONE);
 //        map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
 //    }
-
     private Map map = null;
-    private MapFragment mapFragment = null;
+    MapsF mapsF  = new MapsF();
+
+    //private MapFragment mapFragment = mapsF.getMapFragment();
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
     View v;
@@ -63,8 +69,11 @@ public class DetailResiActivity extends AppCompatActivity{
 //    View v;
 //    private static final int REQUEST_CODE_PERMISSION = 1;
 //    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
-    Double latitude, longitude;
 
+//    @Override
+//    public void onBackPressed() {
+//        mapFragment = null;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,15 +116,16 @@ public class DetailResiActivity extends AppCompatActivity{
 //            }
 //        });
 
-        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment);
-        mapFragment.init(new OnEngineInitListener() {
+        mapsF.setMapFragment((MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment));
+
+        mapsF.getMapFragment().init(new OnEngineInitListener() {
             @Override
             public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
                 if (error == OnEngineInitListener.Error.NONE) {
-                    map = mapFragment.getMap();
+                    map = mapsF.getMapFragment().getMap();
                     map.setCenter(new GeoCoordinate(-6.874230, 107.616400), Map.Animation.NONE);
                     map.setZoomLevel(map.getMaxZoomLevel());
-                    
+
 
                 }else{
                     Log.i("HERE ERR", error.getDetails());
@@ -209,6 +219,15 @@ public class DetailResiActivity extends AppCompatActivity{
             }
         });
 
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK))
+        {
+            this.finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void load_maps_view(){
