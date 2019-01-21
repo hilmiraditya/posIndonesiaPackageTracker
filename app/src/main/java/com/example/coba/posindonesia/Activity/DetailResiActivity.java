@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.transition.Fade;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -47,12 +48,13 @@ public class DetailResiActivity extends AppCompatActivity{
     private MapFragment mapFragment = null;
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
-
+    View v;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_resi);
+        load_maps_view();
         final OnMapReadyCallback onMapReadyCallback = null;
         TextView noDetailResi = this.findViewById(R.id.noDetailResi);
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
@@ -179,13 +181,17 @@ public class DetailResiActivity extends AppCompatActivity{
                 sessionManager.setLatitude(response.body().getMessage().getLatitude());
                 sessionManager.setLongitude(response.body().getMessage().getLongitude());
             }
-
             @Override
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
             }
         });
+    }
 
+    private void load_maps_view(){
+        ViewStub stub = (ViewStub) findViewById(R.id.MAP_ETA);
+        stub.setLayoutResource(R.layout.maps_eta);
+        v = stub.inflate();
     }
 
 }
