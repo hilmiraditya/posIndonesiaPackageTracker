@@ -58,8 +58,11 @@ public class DetailResiActivity extends AppCompatActivity{
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
     View v;
-    private static final int REQUEST_CODE_PERMISSION = 1;
-    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+
+//    pindahin ke main activity
+//    View v;
+//    private static final int REQUEST_CODE_PERMISSION = 1;
+//    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     Double latitude, longitude;
 
 
@@ -68,13 +71,13 @@ public class DetailResiActivity extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_resi);
-        permission();
         load_maps_view();
         final OnMapReadyCallback onMapReadyCallback = null;
         TextView noDetailResi = this.findViewById(R.id.noDetailResi);
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
-
+        latitude = getIntent().getDoubleExtra("latitude",latitude);
+        longitude = getIntent().getDoubleExtra("longitude",longitude);
 //        // masukin sini mi lon lat nya
 //        // masukin sini mi lon lat nya
 //        getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
@@ -209,29 +212,30 @@ public class DetailResiActivity extends AppCompatActivity{
         v = stub.inflate();
     }
 
-    private void permission(){
-        if(Build.VERSION.SDK_INT>= 23) {
-            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(DetailResiActivity.this,
-                        new String[]{mPermission,
-                        }, REQUEST_CODE_PERMISSION);
-                return;
-            } else {
-                FusedLocationProviderClient mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
-                mFusedLocation.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        if (location != null){
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            Log.i("BERHASIL LAT",String.valueOf(latitude));
-                            Log.i("BERHASIL LONG",String.valueOf(longitude));
-                            getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
-                        }
-                    }
-                });
-            }
-        }
-    }
+//    pindahin ke main activity
+//    private void permission(){
+//        if(Build.VERSION.SDK_INT>= 23) {
+//            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(DetailResiActivity.this,
+//                        new String[]{mPermission,
+//                        }, REQUEST_CODE_PERMISSION);
+//                return;
+//            } else {
+//                FusedLocationProviderClient mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
+//                mFusedLocation.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+//                    @Override
+//                    public void onSuccess(Location location) {
+//                        if (location != null){
+//                            latitude = location.getLatitude();
+//                            longitude = location.getLongitude();
+//                            Log.i("BERHASIL LAT",String.valueOf(latitude));
+//                            Log.i("BERHASIL LONG",String.valueOf(longitude));
+////                            getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//    }
 
 }

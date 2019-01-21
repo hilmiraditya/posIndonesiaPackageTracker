@@ -1,28 +1,38 @@
 package com.example.coba.posindonesia.Activity;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.transition.Fade;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.coba.posindonesia.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 public class MainActivity extends AppCompatActivity {
 
     DetailResiActivity da;
-
-
-
+    View v;
+    private static final int REQUEST_CODE_PERMISSION = 1;
+    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
+    Double latitude, longitude;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        permission();
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
         fade.excludeTarget(decor.findViewById(R.id.action_bar_container),true);
@@ -57,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
                 goToDetailResi.putExtra("NoResi", noresi.getText().toString());
+                goToDetailResi.putExtra("latitude", latitude);
+                goToDetailResi.putExtra("longitude", longitude);
 
                 Pair<View, String> p1 = Pair.create(vAppLogo, "AppLogo");
                 Pair<View, String> p2 = Pair.create(vAppTitle, "AppTitle");
@@ -69,6 +81,30 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(goToDetailResi, activityOptions.toBundle());
             }
         });
+    }
+    private void permission(){
+        if(Build.VERSION.SDK_INT>= 23) {
+            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{mPermission,
+                        }, REQUEST_CODE_PERMISSION);
+                return;
+            } else {
+                FusedLocationProviderClient mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
+                mFusedLocation.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        if (location != null){
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            Log.i("BERHASIL LAT",String.valueOf(latitude));
+                            Log.i("BERHASIL LONG",String.valueOf(longitude));
+//                            getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
+                        }
+                    }
+                });
+            }
+        }
     }
 
 }
