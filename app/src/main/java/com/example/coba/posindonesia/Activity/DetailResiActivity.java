@@ -164,7 +164,7 @@ public class DetailResiActivity extends AppCompatActivity{
             public void onResponse(Call<Resi> call, Response<Resi> response) {
                 Log.i("succ", response.message());
 
-                TextView etaResi = findViewById(R.id.etaPackage);
+                TextView etaResi = findViewById(R.id.ETA);
 
                 View dsV = new DetailBottomSheet().getView();
                 SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
