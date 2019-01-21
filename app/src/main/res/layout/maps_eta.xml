@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="ETA 13:15"
+            android:text="-"
             android:textAlignment="center"
             android:textColor="#ffff"
             android:textSize="20sp"

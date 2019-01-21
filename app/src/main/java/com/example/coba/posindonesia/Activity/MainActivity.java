@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
                 goToDetailResi.putExtra("NoResi", noresi.getText().toString());
-                goToDetailResi.putExtra("latitude", latitude);
-                goToDetailResi.putExtra("longitude", longitude);
+                goToDetailResi.putExtra("latitude", latitude.toString());
+                goToDetailResi.putExtra("longitude", longitude.toString());
 
                 Pair<View, String> p1 = Pair.create(vAppLogo, "AppLogo");
                 Pair<View, String> p2 = Pair.create(vAppTitle, "AppTitle");

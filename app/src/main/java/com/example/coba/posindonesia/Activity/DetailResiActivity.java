@@ -76,11 +76,14 @@ public class DetailResiActivity extends AppCompatActivity{
         TextView noDetailResi = this.findViewById(R.id.noDetailResi);
         Log.i("SRRRR", getIntent().getStringExtra("NoResi"));
         noDetailResi.setText(getIntent().getStringExtra("NoResi"));
-        latitude = getIntent().getDoubleExtra("latitude",latitude);
-        longitude = getIntent().getDoubleExtra("longitude",longitude);
+
+        Log.i("DARI MAIN LAT", getIntent().getStringExtra("latitude"));
+        Log.i("DARI MAIN LONG", getIntent().getStringExtra("longitude"));
+
 //        // masukin sini mi lon lat nya
 //        // masukin sini mi lon lat nya
-//        getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
+        //getDetailResi(getIntent().getStringExtra("NoResi"),getIntent().getStringExtra("longitude"),getIntent().getStringExtra("latitude"));
+        getDetailResi(getIntent().getStringExtra("NoResi"),"107.573117","-6.9032739");
 //        // masukin sini mi lon lat nya
 //        // masukin sini mi lon lat nya
 
@@ -199,11 +202,13 @@ public class DetailResiActivity extends AppCompatActivity{
                 sessionManager.setLatitude(response.body().getMessage().getLatitude());
                 sessionManager.setLongitude(response.body().getMessage().getLongitude());
             }
+
             @Override
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
             }
         });
+
     }
 
     private void load_maps_view(){
