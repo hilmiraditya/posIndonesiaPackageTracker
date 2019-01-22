@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.coba.posindonesia.Fragment.DetailBottomSheet;
 import com.example.coba.posindonesia.Interfaces.RequestAPI;
@@ -197,20 +198,26 @@ public class DetailResiActivity extends AppCompatActivity{
             public void onResponse(Call<Resi> call, Response<Resi> response) {
                 Log.i("succ", response.message());
 
-                TextView etaResi = findViewById(R.id.ETA);
+                if (response.body() == null){
+                    Log.i("succ", "null");
+                    Toast.makeText(DetailResiActivity.this,"Resi tidak ditemukan", Toast.LENGTH_LONG).show();
+                    finish();
+                }else{
+                    TextView etaResi = findViewById(R.id.ETA);
 
-                View dsV = new DetailBottomSheet().getView();
-                SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
-                String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
-                String eta = response.body().getMessage().getEstimation_time();
-                int maxLength = (eta.length() < 3)?eta.length():3;
-                String cutString = eta.substring(0, maxLength) + " Minutes";
-                etaResi.setText(cutString);
-                sessionManager.setSummary(summ);
-                sessionManager.setYours(response.body().getMessage().getYour_packet());
-                sessionManager.setResi(noResi);
-                sessionManager.setLatitude(response.body().getMessage().getLatitude());
-                sessionManager.setLongitude(response.body().getMessage().getLongitude());
+                    View dsV = new DetailBottomSheet().getView();
+                    SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
+                    String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
+                    String eta = response.body().getMessage().getEstimation_time();
+                    int maxLength = (eta.length() < 3)?eta.length():3;
+                    String cutString = eta.substring(0, maxLength) + " Minutes";
+                    etaResi.setText(cutString);
+                    sessionManager.setSummary(summ);
+                    sessionManager.setYours(response.body().getMessage().getYour_packet());
+                    sessionManager.setResi(noResi);
+                    sessionManager.setLatitude(response.body().getMessage().getLatitude());
+                    sessionManager.setLongitude(response.body().getMessage().getLongitude());
+                }
             }
 
             @Override
