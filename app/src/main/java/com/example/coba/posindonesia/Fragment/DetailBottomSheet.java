@@ -15,8 +15,6 @@ import com.example.coba.posindonesia.R;
 import com.example.coba.posindonesia.Adapter.RecyclerViewAdapter;
 import com.example.coba.posindonesia.Session.SessionManager;
 
-import org.w3c.dom.Text;
-
 public class DetailBottomSheet extends BottomSheetDialogFragment {
 
     RecyclerView recyclerView;

@@ -84,23 +84,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if((isEmpty(noresi))){
-                    Log.i("ERROR","Harap diisi");
                     Toast.makeText(MainActivity.this,"No Resi harap diisi",Toast.LENGTH_LONG).show();
                 } else {
-                    Log.i("SUKSES","Udah diisi hehehe");
                     Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
                     goToDetailResi.putExtra("NoResi", noresi.getText().toString());
                     goToDetailResi.putExtra("latitude", latitude.toString());
                     goToDetailResi.putExtra("longitude", longitude.toString());
-
                     Pair<View, String> p1 = Pair.create(vAppLogo, "AppLogo");
                     Pair<View, String> p2 = Pair.create(vAppTitle, "AppTitle");
                     Pair<View, String> p3 = Pair.create(vCardBody, "CardBody");
                     Pair<View, String> p4 = Pair.create(vButtonS, "ButtonS");
                     Pair<View, String> p5 = Pair.create(vmapView, "mapBody");
-
                     ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, p1, p2, p3, p4, p5);
-
                     startActivity(goToDetailResi, activityOptions.toBundle());
                 }
             }
@@ -123,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
                             longitude = location.getLongitude();
                             Log.i("BERHASIL LAT",String.valueOf(latitude));
                             Log.i("BERHASIL LONG",String.valueOf(longitude));
-//                            getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
                         }
                     }
                 });

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentController;
@@ -47,34 +48,11 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailResiActivity extends AppCompatActivity{
-
-//    private RecyclerView recyclerView;
-//    private RecyclerView.Adapter adapter;
-//    private RecyclerView.LayoutManager layoutManager;
-//    private ArrayList<String> dataSet;
-
-//    @Override
-//    public void onMapReady(Map map) {
-//        map.setCenter(new GeoCoordinate(37.7397, -121.4252, 0.0), Map.Animation.NONE);
-//        map.setZoomLevel((map.getMaxZoomLevel() + map.getMinZoomLevel()) / 2);
-//    }
     private Map map = null;
     MapsF mapsF  = new MapsF();
-
-    //private MapFragment mapFragment = mapsF.getMapFragment();
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
     View v;
-
-//    pindahin ke main activity
-//    View v;
-//    private static final int REQUEST_CODE_PERMISSION = 1;
-//    String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
-
-//    @Override
-//    public void onBackPressed() {
-//        mapFragment = null;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +68,7 @@ public class DetailResiActivity extends AppCompatActivity{
         Log.i("DARI MAIN LAT", getIntent().getStringExtra("latitude"));
         Log.i("DARI MAIN LONG", getIntent().getStringExtra("longitude"));
 
-//        // masukin sini mi lon lat nya
-//        // masukin sini mi lon lat nya
-        //getDetailResi(getIntent().getStringExtra("NoResi"),getIntent().getStringExtra("longitude"),getIntent().getStringExtra("latitude"));
-        getDetailResi(getIntent().getStringExtra("NoResi"),"107.573117","-6.9032739");
-//        // masukin sini mi lon lat nya
-//        // masukin sini mi lon lat nya
+        getDetailResi(getIntent().getStringExtra("NoResi"),getIntent().getStringExtra("longitude"),getIntent().getStringExtra("latitude"));
 
         Fade fade = new Fade();
         View decor = getWindow().getDecorView();
@@ -107,15 +80,6 @@ public class DetailResiActivity extends AppCompatActivity{
         getWindow().setExitTransition(fade);
 
         getWindow().setAllowReturnTransitionOverlap(false);
-
-//        detailResiBtn.findViewById(R.id.detailResiBtn);
-//        detailResiBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bottom = new DetailBottomSheet();
-//                bottom.show(getSupportFragmentManager(), bottom.getTag());
-//            }
-//        });
 
         mapsF.setMapFragment((MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment));
 
@@ -143,55 +107,19 @@ public class DetailResiActivity extends AppCompatActivity{
             }
         });
 
-//        FloatingActionButton refresh_button = (FloatingActionButton) findViewById(R.id.refresh_button);
-//        refresh_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //do here
-//            }
-//        });
+        FloatingActionButton refresh_button = (FloatingActionButton) findViewById(R.id.refresh_button);
+        refresh_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //do here
+            }
+        });
 
     }
-
-
-
-
-
-
-//        ///adapter///
-//        dataSet = new ArrayList<>();
-//        setDataSet();
-//        recyclerView = new RecyclerView(DetailResiActivity.this);
-//        recyclerView.findViewById(R.id.detil_recycleview);
-//        recyclerView.setHasFixedSize(true);
-//
-//        layoutManager = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(layoutManager);
-//
-//        adapter = new RecyclerViewAdapter(dataSet);
-//        recyclerView.setAdapter(adapter);
-//        ////
-
-
-//    private void setDataSet(){
-//        dataSet.add("HALO SATU DUA TIGA");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//        dataSet.add("hehehe");
-//    }
-
-
-//GET URUTAN PAKET
 
     protected void getDetailResi(final String noResi, String lon, String lat){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl.getUrl()).addConverterFactory(GsonConverterFactory.create()).build();
         RequestAPI requestAPI = retrofit.create(RequestAPI.class);
-
         Call<Resi> resiCall = requestAPI.getResi(noResi, lon, lat);
         resiCall.enqueue(new Callback<Resi>() {
             @Override
@@ -220,7 +148,6 @@ public class DetailResiActivity extends AppCompatActivity{
                     sessionManager.setLongitude(response.body().getMessage().getLongitude());
                 }
             }
-
             @Override
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
@@ -261,31 +188,4 @@ public class DetailResiActivity extends AppCompatActivity{
         stub.setLayoutResource(R.layout.maps_eta);
         v = stub.inflate();
     }
-
-//    pindahin ke main activity
-//    private void permission(){
-//        if(Build.VERSION.SDK_INT>= 23) {
-//            if (checkSelfPermission(mPermission) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(DetailResiActivity.this,
-//                        new String[]{mPermission,
-//                        }, REQUEST_CODE_PERMISSION);
-//                return;
-//            } else {
-//                FusedLocationProviderClient mFusedLocation = LocationServices.getFusedLocationProviderClient(this);
-//                mFusedLocation.getLastLocation().addOnSuccessListener(this, new OnSuccessListener<Location>() {
-//                    @Override
-//                    public void onSuccess(Location location) {
-//                        if (location != null){
-//                            latitude = location.getLatitude();
-//                            longitude = location.getLongitude();
-//                            Log.i("BERHASIL LAT",String.valueOf(latitude));
-//                            Log.i("BERHASIL LONG",String.valueOf(longitude));
-////                            getDetailResi(getIntent().getStringExtra("NoResi"),longitude.toString(),latitude.toString());
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//    }
-
 }
