@@ -24,7 +24,7 @@ public class DetailBottomSheet extends BottomSheetDialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottomsheet_detail, container, false);
+        View view = inflater.inflate(R.layout.bottomsheet_detail, container, true);
 
         recyclerViewAdapter = new RecyclerViewAdapter(getContext());
 
