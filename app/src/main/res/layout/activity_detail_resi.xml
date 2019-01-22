@@ -131,7 +131,7 @@
             android:drawableStart="@drawable/ic_description_black_24dp"
             android:drawablePadding="4dp"
             android:drawableTint="@color/colorPrimary"
-            android:text="Detail Resi"
+            android:text="Detail Paket"
             android:textColor="@color/colorPrimary"
             android:transitionName="ButtonS" />
 

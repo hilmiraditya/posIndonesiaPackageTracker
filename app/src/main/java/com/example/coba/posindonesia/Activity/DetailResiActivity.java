@@ -213,7 +213,8 @@ public class DetailResiActivity extends AppCompatActivity{
                     String cutString = eta.substring(0, maxLength) + " Minutes";
                     etaResi.setText(cutString);
                     sessionManager.setSummary(summ);
-                    sessionManager.setYours(response.body().getMessage().getYour_packet());
+                    int numm  = Integer.parseInt(response.body().getMessage().getYour_packet());
+                    sessionManager.setYours(response.body().getMessage().getYour_packet() + getOrdinalFor(numm));
                     sessionManager.setResi(noResi);
                     sessionManager.setLatitude(response.body().getMessage().getLatitude());
                     sessionManager.setLongitude(response.body().getMessage().getLongitude());
@@ -223,9 +224,27 @@ public class DetailResiActivity extends AppCompatActivity{
             @Override
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
+                Toast.makeText(DetailResiActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
+                finish();
+
             }
         });
 
+    }
+
+
+    public static String getOrdinalFor(int value) {
+        int tenRemainder = value % 10;
+        switch (tenRemainder) {
+            case 1:
+                return " st";
+            case 2:
+                return " nd";
+            case 3:
+                return " rd";
+            default:
+                return " th";
+        }
     }
 
     @Override

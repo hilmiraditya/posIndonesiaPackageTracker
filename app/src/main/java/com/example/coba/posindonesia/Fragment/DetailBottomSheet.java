@@ -5,6 +5,7 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +40,7 @@ public class DetailBottomSheet extends BottomSheetDialogFragment {
         resiText.setText(sessionManager.getResi());
 
         TextView yourText = view.findViewById(R.id.yoursPackage);
+        Log.i("NUMM", sessionManager.getYours());
         yourText.setText(sessionManager.getYours());
 
         TextView sumText = view.findViewById(R.id.summaryPackage);
