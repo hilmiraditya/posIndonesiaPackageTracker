@@ -15,6 +15,7 @@ import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.coba.posindonesia.Maps.MapsF;
 import com.example.coba.posindonesia.R;
@@ -39,14 +40,9 @@ public class MainActivity extends AppCompatActivity {
         fade.excludeTarget(decor.findViewById(R.id.action_bar_container),true);
         fade.excludeTarget(android.R.id.statusBarBackground,true);
         fade.excludeTarget(android.R.id.navigationBarBackground,true);
-
         getWindow().setEnterTransition(fade);
         getWindow().setExitTransition(fade);
-
-
         getWindow().setAllowReturnTransitionOverlap(false);
-
-
         detailResiTransition();
 
     }
@@ -68,10 +64,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
+    private boolean isEmpty(EditText etText) {
+        if (etText.getText().toString().trim().length() > 0)
+            return false;
+        return true;
+    }
+
     private void detailResiTransition(){
-
-
-
         final View vAppLogo = this.findViewById(R.id.imageView);
         final View vAppTitle = this.findViewById(R.id.textView);
         final View vCardBody = this.findViewById(R.id.resiCard);
@@ -84,20 +83,26 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
-                goToDetailResi.putExtra("NoResi", noresi.getText().toString());
-                goToDetailResi.putExtra("latitude", latitude.toString());
-                goToDetailResi.putExtra("longitude", longitude.toString());
+                if((isEmpty(noresi))){
+                    Log.i("ERROR","Harap diisi");
+                    Toast.makeText(MainActivity.this,"No Resi harap diisi",Toast.LENGTH_LONG).show();
+                } else {
+                    Log.i("SUKSES","Udah diisi hehehe");
+                    Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
+                    goToDetailResi.putExtra("NoResi", noresi.getText().toString());
+                    goToDetailResi.putExtra("latitude", latitude.toString());
+                    goToDetailResi.putExtra("longitude", longitude.toString());
 
-                Pair<View, String> p1 = Pair.create(vAppLogo, "AppLogo");
-                Pair<View, String> p2 = Pair.create(vAppTitle, "AppTitle");
-                Pair<View, String> p3 = Pair.create(vCardBody, "CardBody");
-                Pair<View, String> p4 = Pair.create(vButtonS, "ButtonS");
-                Pair<View, String> p5 = Pair.create(vmapView, "mapBody");
+                    Pair<View, String> p1 = Pair.create(vAppLogo, "AppLogo");
+                    Pair<View, String> p2 = Pair.create(vAppTitle, "AppTitle");
+                    Pair<View, String> p3 = Pair.create(vCardBody, "CardBody");
+                    Pair<View, String> p4 = Pair.create(vButtonS, "ButtonS");
+                    Pair<View, String> p5 = Pair.create(vmapView, "mapBody");
 
-                ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, p1, p2, p3, p4, p5);
+                    ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, p1, p2, p3, p4, p5);
 
-                startActivity(goToDetailResi, activityOptions.toBundle());
+                    startActivity(goToDetailResi, activityOptions.toBundle());
+                }
             }
         });
     }
