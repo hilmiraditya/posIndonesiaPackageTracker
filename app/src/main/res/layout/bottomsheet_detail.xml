@@ -47,7 +47,7 @@
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/detil_recycleview"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"
+                        android:layout_height="300dp"
                         android:layout_marginBottom="8dp"
                         android:layout_weight="1" />
 
@@ -69,6 +69,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Your Package"
                                 android:textAlignment="center"
+                                android:textColor="@color/colorPrimary"
                                 android:textSize="18sp" />
 
                             <TextView
@@ -117,12 +118,12 @@
                         android:background="@drawable/orange_gradient_color" />
 
                     <LinearLayout
-                        android:id="@+id/PENGIRIM_CARD"
+                        android:id="@+id/PENERIMA_CARD"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="18dp"
+                        android:layout_marginTop="10dp"
                         android:orientation="vertical"
-                        android:padding="8dp">
+                        android:padding="3dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -138,7 +139,62 @@
                                 android:layout_alignParentTop="true"
                                 android:paddingBottom="5dp"
                                 android:text="Fariz Purnomo"
-                                android:textSize="24sp" />
+                                android:textSize="20sp" />
+
+                            <TextView
+                                android:id="@+id/keteranganpengirim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/cardview_list_title"
+                                android:text="Penerima"
+                                android:textColor="@color/colorPrimaryDark"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/lokasipengirim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/keteranganpengirim"
+                                android:text="Jl. Kasuari Tangerang Salatan"
+                                android:textColor="#8b8b8b" />
+
+                            <TextView
+                                android:id="@+id/nohppengirim"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/lokasipengirim"
+                                android:text="087855857881"
+                                android:textColor="#8b8b8b"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/PENGIRIM_CARD"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:padding="3dp">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#fff"
+                            android:elevation="4dp"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:id="@+id/cardview_list_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:paddingBottom="5dp"
+                                android:text="Fariz Purnomo"
+                                android:textSize="20sp" />
 
                             <TextView
                                 android:id="@+id/keteranganpengirim"
@@ -170,71 +226,6 @@
                         </RelativeLayout>
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/PENERIMA_CARD"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="18dp"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="#fff"
-                            android:elevation="4dp"
-                            android:padding="5dp">
-
-                            <TextView
-                                android:id="@+id/cardview_list_title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentTop="true"
-                                android:paddingBottom="5dp"
-                                android:text="Hilmi Raditya"
-                                android:textSize="24sp" />
-
-                            <TextView
-                                android:id="@+id/keteranganpenerima"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardview_list_title"
-                                android:text="Penerima"
-                                android:textColor="@color/colorPrimaryDark"
-                                android:textSize="14sp"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/lokasipenerima"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/keteranganpenerima"
-                                android:text="Tangerang Selatan, Banten"
-                                android:textColor="#8b8b8b"
-                                android:textStyle="bold" />
-
-                            <TextView
-                                android:id="@+id/alamatpenerima"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/lokasipenerima"
-                                android:text="Jl. Kasuari I Blok HB 9 No. 8 Sektor IX Bintaro Jaya"
-                                android:textColor="#8b8b8b" />
-
-                            <TextView
-                                android:id="@+id/nohppenerima"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/alamatpenerima"
-                                android:text="087855857881"
-                                android:textColor="#8b8b8b"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
 
                 </LinearLayout>
             </ScrollView>
