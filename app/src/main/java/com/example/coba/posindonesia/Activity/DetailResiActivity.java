@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coba.posindonesia.Fragment.DetailBottomSheet;
+import com.example.coba.posindonesia.Fragment.InfoKurirBottomSheet;
 import com.example.coba.posindonesia.Interfaces.RequestAPI;
 import com.example.coba.posindonesia.Maps.MapsF;
 import com.example.coba.posindonesia.Model.Resi;
@@ -103,6 +104,15 @@ public class DetailResiActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 BottomSheetDialogFragment bottom = new DetailBottomSheet();
+                bottom.show(getSupportFragmentManager(),bottom.getTag());
+            }
+        });
+
+        Button button2 = (Button) findViewById(R.id.infokurirBtn);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BottomSheetDialogFragment bottom = new InfoKurirBottomSheet();
                 bottom.show(getSupportFragmentManager(),bottom.getTag());
             }
         });
