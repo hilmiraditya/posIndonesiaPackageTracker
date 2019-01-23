@@ -41,9 +41,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.MapObject;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.camera.CameraUpdate;
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
+import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.style.sources.TileSet;
 
 import org.w3c.dom.Text;
 
@@ -120,11 +126,22 @@ public class DetailResiActivity extends AppCompatActivity{
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
             @Override
-            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+            public void onMapReady(@NonNull final MapboxMap mapboxMap) {
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
                         Log.i("BISA","MAPSNYA KEREN YA WKWWK");
+                        CameraPosition position = new CameraPosition.Builder()
+                                .target(new LatLng(-6.8983035, 107.619494))
+                                .zoom(10)
+                                .tilt(20)
+                                .build();
+                        mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
+                        mapboxMap.addMarker(new MarkerOptions()
+                                .position(new LatLng(-6.8983035,107.619494))
+                                .title("Lokasi Kurir")
+                                .snippet("Fariz Putra Dandi")
+                        );
                     }
                 });
             }
@@ -155,7 +172,7 @@ public class DetailResiActivity extends AppCompatActivity{
         refresh_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //do here
+//                mapView.onDestroy();
             }
         });
 
