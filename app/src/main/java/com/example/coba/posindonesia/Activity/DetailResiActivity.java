@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -39,6 +40,10 @@ import com.here.android.mpa.mapping.Map;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.MapObject;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.maps.MapView;
+import com.mapbox.mapboxsdk.maps.MapboxMap;
+import com.mapbox.mapboxsdk.maps.Style;
 
 import org.w3c.dom.Text;
 
@@ -55,8 +60,18 @@ public class DetailResiActivity extends AppCompatActivity{
     BaseUrl baseUrl = new BaseUrl();
     View v;
 
+
+    ///nyoba mapbox//
+        private MapView mapView;
+    /// end//
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
+
+        Mapbox.getInstance(this,
+                "pk.eyJ1IjoiaGlsbWlyYWRpdHlhIiwiYSI6ImNqcjh2eTJlczAxeDg0M2xoNDU4eWxlMDMifQ.8A34sWyzuIKrsioK-zrAqg");
+        Mapbox.setAccessToken("pk.eyJ1IjoiaGlsbWlyYWRpdHlhIiwiYSI6ImNqcjh2eTJlczAxeDg0M2xoNDU4eWxlMDMifQ.8A34sWyzuIKrsioK-zrAqg");
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_resi);
@@ -82,22 +97,41 @@ public class DetailResiActivity extends AppCompatActivity{
 
         getWindow().setAllowReturnTransitionOverlap(false);
 
-        mapsF.setMapFragment((MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment));
+//        mapsF.setMapFragment((MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment));
+//
+//        mapsF.getMapFragment().init(new OnEngineInitListener() {
+//            @Override
+//            public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
+//                if (error == OnEngineInitListener.Error.NONE) {
+//                    map = mapsF.getMapFragment().getMap();
+//                    map.setCenter(new GeoCoordinate(-6.874230, 107.616400), Map.Animation.NONE);
+//                    map.setZoomLevel(map.getMaxZoomLevel());
+//
+//
+//                }else{
+//                    Log.i("HERE ERR", error.getDetails());
+//                }
+//            }
+//        });
 
-        mapsF.getMapFragment().init(new OnEngineInitListener() {
+
+        ////mappp////
+        mapView = (MapView) findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
             @Override
-            public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
-                if (error == OnEngineInitListener.Error.NONE) {
-                    map = mapsF.getMapFragment().getMap();
-                    map.setCenter(new GeoCoordinate(-6.874230, 107.616400), Map.Animation.NONE);
-                    map.setZoomLevel(map.getMaxZoomLevel());
-
-
-                }else{
-                    Log.i("HERE ERR", error.getDetails());
-                }
+            public void onMapReady(@NonNull MapboxMap mapboxMap) {
+                mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                    @Override
+                    public void onStyleLoaded(@NonNull Style style) {
+                        Log.i("BISA","MAPSNYA KEREN YA WKWWK");
+                    }
+                });
             }
         });
+
+
+        ///end///
 
         Button button = (Button) findViewById(R.id.detailResiBtn);
         button.setOnClickListener(new View.OnClickListener() {
