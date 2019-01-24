@@ -1,7 +1,9 @@
 package com.example.coba.posindonesia.Fragment;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +21,7 @@ public class DetailBottomSheet extends BottomSheetDialogFragment {
 
     RecyclerView recyclerView;
     RecyclerViewAdapter recyclerViewAdapter;
+    TextView infoPengirim;
 
 
     @Override
@@ -43,6 +46,16 @@ public class DetailBottomSheet extends BottomSheetDialogFragment {
 
         TextView sumText = view.findViewById(R.id.summaryPackage);
         sumText.setText(sessionManager.getSummary());
+
+        infoPengirim = view.findViewById(R.id.infoPengirim);
+
+        if (infoPengirim.getVisibility() == View.VISIBLE) {
+            Log.i("ADA", "ADA");
+        } else {
+            Log.i("GADA", "GADA");
+        }
+
+
 
         return view;
     }

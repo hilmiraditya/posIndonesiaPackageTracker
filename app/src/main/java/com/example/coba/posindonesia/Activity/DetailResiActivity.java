@@ -190,7 +190,7 @@ public class DetailResiActivity extends AppCompatActivity{
                 if (response.body() == null){
                     Log.i("succ", "null");
                     Toast.makeText(DetailResiActivity.this,"Resi tidak ditemukan", Toast.LENGTH_LONG).show();
-                    finish();
+                    //finish();
                 }else{
                     TextView etaResi = findViewById(R.id.ETA);
 
@@ -213,7 +213,7 @@ public class DetailResiActivity extends AppCompatActivity{
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
                 Toast.makeText(DetailResiActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
-                finish();
+                //finish();
 
             }
         });
