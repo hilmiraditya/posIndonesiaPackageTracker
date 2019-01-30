@@ -49,9 +49,12 @@ import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.Style;
+import com.mapbox.mapboxsdk.plugins.building.BuildingPlugin;
 import com.mapbox.mapboxsdk.style.sources.TileSet;
 
 import org.w3c.dom.Text;
+
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -59,17 +62,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.util.Objects.*;
+
 public class DetailResiActivity extends AppCompatActivity{
     private Map map = null;
     MapsF mapsF  = new MapsF();
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
     View v;
-
-
-    ///nyoba mapbox//
-        private MapView mapView;
-    /// end//
+    private MapView mapView;
+    private BuildingPlugin buildingPlugin;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -103,25 +105,7 @@ public class DetailResiActivity extends AppCompatActivity{
 
         getWindow().setAllowReturnTransitionOverlap(false);
 
-//        mapsF.setMapFragment((MapFragment) getFragmentManager().findFragmentById(R.id.mapfragment));
-//
-//        mapsF.getMapFragment().init(new OnEngineInitListener() {
-//            @Override
-//            public void onEngineInitializationCompleted(OnEngineInitListener.Error error) {
-//                if (error == OnEngineInitListener.Error.NONE) {
-//                    map = mapsF.getMapFragment().getMap();
-//                    map.setCenter(new GeoCoordinate(-6.874230, 107.616400), Map.Animation.NONE);
-//                    map.setZoomLevel(map.getMaxZoomLevel());
-//
-//
-//                }else{
-//                    Log.i("HERE ERR", error.getDetails());
-//                }
-//            }
-//        });
 
-
-        ////mappp////
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
@@ -130,7 +114,6 @@ public class DetailResiActivity extends AppCompatActivity{
                 mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
-                        Log.i("BISA","MAPSNYA KEREN YA WKWWK");
                         CameraPosition position = new CameraPosition.Builder()
                                 .target(new LatLng(-6.8983035, 107.619494))
                                 .zoom(10)
@@ -172,7 +155,29 @@ public class DetailResiActivity extends AppCompatActivity{
         refresh_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                mapView.onDestroy();
+                mapView = (MapView) findViewById(R.id.mapView);
+                mapView.onCreate(savedInstanceState);
+                mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
+                    @Override
+                    public void onMapReady(@NonNull final MapboxMap mapboxMap) {
+                        mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
+                            @Override
+                            public void onStyleLoaded(@NonNull Style style) {
+                                CameraPosition position = new CameraPosition.Builder()
+                                        .target(new LatLng(2.970042, 99.068169))
+                                        .zoom(10)
+                                        .tilt(20)
+                                        .build();
+                                mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
+                                mapboxMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(2.970042,99.068169))
+                                        .title("Lokasi Kurir")
+                                        .snippet("Fariz Putra Dandi")
+                                );
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -249,4 +254,5 @@ public class DetailResiActivity extends AppCompatActivity{
         stub.setLayoutResource(R.layout.maps_eta);
         v = stub.inflate();
     }
+
 }
