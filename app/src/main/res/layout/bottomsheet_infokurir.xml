@@ -76,7 +76,7 @@
                     android:drawableStart="@drawable/telfon"
                     android:drawablePadding="4dp"
                     android:drawableTint="@color/colorPrimary"
-                    android:text="Telefon Kurir"
+                    android:text="CAll"
                     android:textColor="@color/colorPrimary"
                     android:transitionName="ButtonS" />
 
@@ -89,7 +89,7 @@
                     android:drawableStart="@drawable/sms"
                     android:drawablePadding="4dp"
                     android:drawableTint="@color/colorPrimary"
-                    android:text="SMS Kurir"
+                    android:text="SMS"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
                     android:transitionName="ButtonS" />

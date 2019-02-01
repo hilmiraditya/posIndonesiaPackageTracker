@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if((isEmpty(noresi))){
-                    Toast.makeText(MainActivity.this,"No Resi harap diisi",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,"Receipt Number is Empty",Toast.LENGTH_LONG).show();
                 } else {
                     Intent goToDetailResi = new Intent(MainActivity.this, DetailResiActivity.class);
                     goToDetailResi.putExtra("NoResi", noresi.getText().toString());

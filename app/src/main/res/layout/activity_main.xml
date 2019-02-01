@@ -73,7 +73,7 @@
                     android:layout_marginEnd="8dp"
                     android:background="@null"
                     android:ems="14"
-                    android:hint="No Resi"
+                    android:hint="Receipt Number"
                     android:inputType="textPersonName"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

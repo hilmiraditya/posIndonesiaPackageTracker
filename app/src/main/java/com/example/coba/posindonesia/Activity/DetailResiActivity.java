@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.FloatingActionButton;
@@ -55,13 +56,16 @@ import com.mapbox.mapboxsdk.style.sources.TileSet;
 import org.w3c.dom.Text;
 
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static java.lang.Math.round;
 import static java.util.Objects.*;
 
 public class DetailResiActivity extends AppCompatActivity{
@@ -71,16 +75,19 @@ public class DetailResiActivity extends AppCompatActivity{
     BaseUrl baseUrl = new BaseUrl();
     View v;
     private MapView mapView;
+    public Double kurirLong, kurirLat;
+    public Bundle tempBundlel;
     private BuildingPlugin buildingPlugin;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-
         Mapbox.getInstance(this,
                 "pk.eyJ1IjoiaGlsbWlyYWRpdHlhIiwiYSI6ImNqcjh2eTJlczAxeDg0M2xoNDU4eWxlMDMifQ.8A34sWyzuIKrsioK-zrAqg");
         Mapbox.setAccessToken("pk.eyJ1IjoiaGlsbWlyYWRpdHlhIiwiYSI6ImNqcjh2eTJlczAxeDg0M2xoNDU4eWxlMDMifQ.8A34sWyzuIKrsioK-zrAqg");
 
 
+        sessionManager = new SessionManager(DetailResiActivity.this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_resi);
         load_maps_view();
@@ -106,6 +113,12 @@ public class DetailResiActivity extends AppCompatActivity{
         getWindow().setAllowReturnTransitionOverlap(false);
 
 
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //Do something after 100ms
+
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
@@ -115,13 +128,13 @@ public class DetailResiActivity extends AppCompatActivity{
                     @Override
                     public void onStyleLoaded(@NonNull Style style) {
                         CameraPosition position = new CameraPosition.Builder()
-                                .target(new LatLng(-6.8983035, 107.619494))
+                                .target(new LatLng(kurirLat, kurirLong))
                                 .zoom(10)
                                 .tilt(20)
                                 .build();
                         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
                         mapboxMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(-6.8983035,107.619494))
+                                .position(new LatLng(kurirLat,kurirLong))
                                 .title("Lokasi Kurir")
                                 .snippet("Fariz Putra Dandi")
                         );
@@ -130,6 +143,8 @@ public class DetailResiActivity extends AppCompatActivity{
             }
         });
 
+            }
+        }, 8000);
 
         ///end///
 
@@ -155,8 +170,18 @@ public class DetailResiActivity extends AppCompatActivity{
         refresh_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getDetailResi(getIntent().getStringExtra("NoResi"),getIntent().getStringExtra("longitude"),getIntent().getStringExtra("latitude"));
+            }
+        });
+
+
+
+    }
+
+    protected void loadMap(final Double newLat, final Double newLong){
+
+                Toast.makeText(DetailResiActivity.this,newLat + " - " + newLong, Toast.LENGTH_LONG).show();
                 mapView = (MapView) findViewById(R.id.mapView);
-                mapView.onCreate(savedInstanceState);
                 mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
                     @Override
                     public void onMapReady(@NonNull final MapboxMap mapboxMap) {
@@ -164,27 +189,41 @@ public class DetailResiActivity extends AppCompatActivity{
                             @Override
                             public void onStyleLoaded(@NonNull Style style) {
                                 CameraPosition position = new CameraPosition.Builder()
-                                        .target(new LatLng(2.970042, 99.068169))
+                                        .target(new LatLng(newLat, newLong))
                                         .zoom(10)
                                         .tilt(20)
                                         .build();
                                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
                                 mapboxMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(2.970042,99.068169))
+                                        .position(new LatLng(newLat, newLong))
                                         .title("Lokasi Kurir")
                                         .snippet("Fariz Putra Dandi")
                                 );
                             }
                         });
                     }
-                });
-            }
         });
 
     }
 
+
+    private String timeFormatHelper(Double tot_seconds){
+        Double p1 = tot_seconds % 60;
+        Double p2 = tot_seconds / 60;
+        Double p3 = p2 % 60;
+        p2 = p2 / 60;
+        return String.format("Estimation : %02d Hour %02d Minutes", Math.round(p2), Math.round(p3));
+    }
+
     protected void getDetailResi(final String noResi, String lon, String lat){
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl.getUrl()).addConverterFactory(GsonConverterFactory.create()).build();
+
+        final OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(20, TimeUnit.SECONDS)
+                .writeTimeout(20, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl.getUrl()).client(okHttpClient).addConverterFactory(GsonConverterFactory.create()).build();
         RequestAPI requestAPI = retrofit.create(RequestAPI.class);
         Call<Resi> resiCall = requestAPI.getResi(noResi, lon, lat);
         resiCall.enqueue(new Callback<Resi>() {
@@ -192,34 +231,38 @@ public class DetailResiActivity extends AppCompatActivity{
             public void onResponse(Call<Resi> call, Response<Resi> response) {
                 Log.i("succ", response.message());
 
-                if (response.body() == null){
+                if(response.body() == null){
                     Log.i("succ", "null");
-                    Toast.makeText(DetailResiActivity.this,"Resi tidak ditemukan", Toast.LENGTH_LONG).show();
-                    //finish();
+                    Toast.makeText(DetailResiActivity.this,"Server Error", Toast.LENGTH_LONG).show();
+                    finish();
+                }else if (response.body().getError().equals("3")){
+                    Log.i("succ", "null");
+                    Toast.makeText(DetailResiActivity.this,"Receipt Not Found", Toast.LENGTH_LONG).show();
+                    finish();
                 }else{
                     TextView etaResi = findViewById(R.id.ETA);
 
                     View dsV = new DetailBottomSheet().getView();
-                    SessionManager sessionManager = new SessionManager(DetailResiActivity.this);
+
                     String summ = response.body().getMessage().getSum_packet_delivered() + "/" + response.body().getMessage().getTotal_packet();
-                    String eta = response.body().getMessage().getEstimation_time();
-                    int maxLength = (eta.length() < 3)?eta.length():3;
-                    String cutString = eta.substring(0, maxLength) + " Minutes";
-                    etaResi.setText(cutString);
+                    Double eta = response.body().getMessage().getEstimation_time();
+                    etaResi.setText(timeFormatHelper(eta));
                     sessionManager.setSummary(summ);
                     int numm  = Integer.parseInt(response.body().getMessage().getYour_packet());
                     sessionManager.setYours(response.body().getMessage().getYour_packet() + getOrdinalFor(numm));
                     sessionManager.setResi(noResi);
-                    sessionManager.setLatitude(response.body().getMessage().getLatitude());
-                    sessionManager.setLongitude(response.body().getMessage().getLongitude());
+                    sessionManager.setLatitude(response.body().getMessage().getLatitude().toString());
+                    sessionManager.setLongitude(response.body().getMessage().getLongitude().toString());
+                    kurirLat = response.body().getMessage().getLatitude();
+                    kurirLong = response.body().getMessage().getLongitude();
+                    loadMap(response.body().getMessage().getLatitude(), response.body().getMessage().getLongitude());
                 }
             }
             @Override
             public void onFailure(Call<Resi> call, Throwable t) {
                 Log.i("errr", t.getMessage());
                 Toast.makeText(DetailResiActivity.this,t.getMessage(), Toast.LENGTH_LONG).show();
-                //finish();
-
+                finish();
             }
         });
 
@@ -256,3 +299,4 @@ public class DetailResiActivity extends AppCompatActivity{
     }
 
 }
+

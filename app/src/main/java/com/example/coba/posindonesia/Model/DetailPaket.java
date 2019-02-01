@@ -2,11 +2,11 @@ package com.example.coba.posindonesia.Model;
 
 public class DetailPaket {
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
@@ -22,15 +22,15 @@ public class DetailPaket {
         return sum_packet_delivered;
     }
 
-    public String getEstimation_time() {
+    public Double getEstimation_time() {
         return estimation_time;
     }
 
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
     private String your_packet;
     private String total_packet;
     private String sum_packet_delivered;
-    private String estimation_time;
+    private Double estimation_time;
 
 }

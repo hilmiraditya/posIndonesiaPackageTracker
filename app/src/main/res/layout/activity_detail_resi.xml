@@ -110,6 +110,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:clickable="true"
                 android:paddingRight="100dp"
+                android:layout_margin="18dp"
                 android:paddingBottom="200dp"
                 android:tint="@color/putih"
                 app:srcCompat="@drawable/ic_refresh_black_24dp" />
@@ -142,7 +143,7 @@
                 android:drawableStart="@drawable/ic_description_black_24dp"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
-                android:text="Detail Paket"
+                android:text="Package Detail"
                 android:textColor="@color/colorPrimary"
                 android:transitionName="ButtonS"
                 tools:layout_editor_absoluteY="66dp" />
@@ -156,7 +157,7 @@
                 android:drawableStart="@drawable/orang"
                 android:drawablePadding="4dp"
                 android:drawableTint="@color/colorPrimary"
-                android:text="Info Kurir"
+                android:text="Courier Info"
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimary"
                 android:transitionName="ButtonS" />

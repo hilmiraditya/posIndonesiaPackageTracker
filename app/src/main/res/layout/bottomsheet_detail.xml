@@ -171,7 +171,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/infoPengirim"
-                                android:text="Penerima"
+                                android:text="Consignee"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -226,7 +226,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/infoPengirim"
-                                android:text="Pengirim"
+                                android:text="Sender"
                                 android:textColor="@color/colorPrimaryDark"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />

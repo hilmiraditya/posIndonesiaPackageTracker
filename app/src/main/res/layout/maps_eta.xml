@@ -13,10 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:text="-"
+            android:padding="8dp"
+            android:text="Loading..."
             android:textAlignment="center"
             android:textColor="#ffff"
-            android:textSize="20sp"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
         <FrameLayout
