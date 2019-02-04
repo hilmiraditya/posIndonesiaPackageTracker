@@ -42,6 +42,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.here.android.mpa.common.OnEngineInitListener;
 import com.here.android.mpa.mapping.MapObject;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdate;
@@ -74,6 +75,7 @@ public class DetailResiActivity extends AppCompatActivity{
     private MapObject mapObject;
     BaseUrl baseUrl = new BaseUrl();
     View v;
+    private Marker marker_inter;
     private MapView mapView;
     public Double kurirLong, kurirLat;
     public Bundle tempBundlel;
@@ -118,7 +120,11 @@ public class DetailResiActivity extends AppCompatActivity{
             @Override
             public void run() {
                 //Do something after 100ms
+        if (kurirLat == null){
+            Toast.makeText(DetailResiActivity.this,"Slow Connection",Toast.LENGTH_LONG).show();
+            finish();
 
+        }else{
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
@@ -133,7 +139,7 @@ public class DetailResiActivity extends AppCompatActivity{
                                 .tilt(20)
                                 .build();
                         mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
-                        mapboxMap.addMarker(new MarkerOptions()
+                        marker_inter = mapboxMap.addMarker(new MarkerOptions()
                                 .position(new LatLng(kurirLat,kurirLong))
                                 .title("Lokasi Kurir")
                                 .snippet("Fariz Putra Dandi")
@@ -142,9 +148,9 @@ public class DetailResiActivity extends AppCompatActivity{
                 });
             }
         });
-
+        }
             }
-        }, 8000);
+        }, 300000);
 
         ///end///
 
@@ -170,6 +176,7 @@ public class DetailResiActivity extends AppCompatActivity{
         refresh_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                marker_inter.remove();
                 getDetailResi(getIntent().getStringExtra("NoResi"),getIntent().getStringExtra("longitude"),getIntent().getStringExtra("latitude"));
             }
         });
@@ -179,8 +186,7 @@ public class DetailResiActivity extends AppCompatActivity{
     }
 
     protected void loadMap(final Double newLat, final Double newLong){
-
-                Toast.makeText(DetailResiActivity.this,newLat + " - " + newLong, Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailResiActivity.this,newLat + " , " + newLong, Toast.LENGTH_LONG).show();
                 mapView = (MapView) findViewById(R.id.mapView);
                 mapView.getMapAsync(new com.mapbox.mapboxsdk.maps.OnMapReadyCallback() {
                     @Override
@@ -194,7 +200,7 @@ public class DetailResiActivity extends AppCompatActivity{
                                         .tilt(20)
                                         .build();
                                 mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 10);
-                                mapboxMap.addMarker(new MarkerOptions()
+                                marker_inter = mapboxMap.addMarker(new MarkerOptions()
                                         .position(new LatLng(newLat, newLong))
                                         .title("Lokasi Kurir")
                                         .snippet("Fariz Putra Dandi")
@@ -216,6 +222,7 @@ public class DetailResiActivity extends AppCompatActivity{
     }
 
     protected void getDetailResi(final String noResi, String lon, String lat){
+
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(20, TimeUnit.SECONDS)
@@ -273,13 +280,13 @@ public class DetailResiActivity extends AppCompatActivity{
         int tenRemainder = value % 10;
         switch (tenRemainder) {
             case 1:
-                return " st";
+                return "ST";
             case 2:
-                return " nd";
+                return "ND";
             case 3:
-                return " rd";
+                return "RD";
             default:
-                return " th";
+                return "TH";
         }
     }
 
